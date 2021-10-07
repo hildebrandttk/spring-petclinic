@@ -13,6 +13,7 @@ import org.testcontainers.containers.VncRecordingContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.junit.jupiter.Container
 
+@Testcontainers
 class CreateOwnerTest extends GebTest {
 import org.openqa.selenium.chrome.ChromeOptions
 import org.slf4j.LoggerFactory
@@ -38,6 +39,20 @@ import org.testcontainers.junit.jupiter.Testcontainers
          VncRecordingContainer.VncRecordingFormat.MP4)
       // https://github.com/testcontainers/testcontainers-java/issues/2552
       .withSharedMemorySize(2147483648L) // For wsl2 only
+      .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Selenium-Container")))
+
+   static {
+      //Mapping of localhost port on host computer to all containers
+      org.testcontainers.Testcontainers.exposeHostPorts(8080);
+   }
+
+   @Container
+   static BrowserWebDriverContainer webDriverContainer = (BrowserWebDriverContainer) new BrowserWebDriverContainer()
+      .withCapabilities(new ChromeOptions())
+      .withRecordingMode(
+         BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL,
+         new File("target"),
+         VncRecordingContainer.VncRecordingFormat.MP4)
       .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Selenium-Container")))
 
    @Test

@@ -14,7 +14,6 @@ import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
-@Testcontainers
 class CreateOwnerTest extends GebTest {
 
    static {

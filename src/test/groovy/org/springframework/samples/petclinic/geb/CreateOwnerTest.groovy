@@ -12,10 +12,15 @@ import org.testcontainers.containers.BrowserWebDriverContainer
 import org.testcontainers.containers.VncRecordingContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.junit.jupiter.Container
-import org.testcontainers.junit.jupiter.Testcontainers
 
-@Testcontainers
 class CreateOwnerTest extends GebTest {
+import org.openqa.selenium.chrome.ChromeOptions
+import org.slf4j.LoggerFactory
+import org.testcontainers.containers.BrowserWebDriverContainer
+import org.testcontainers.containers.VncRecordingContainer
+import org.testcontainers.containers.output.Slf4jLogConsumer
+import org.testcontainers.junit.jupiter.Container
+import org.testcontainers.junit.jupiter.Testcontainers
 
    static {
       //Mapping of localhost port on host computer to all containers

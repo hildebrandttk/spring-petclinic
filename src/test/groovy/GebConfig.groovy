@@ -1,15 +1,12 @@
-import io.github.bonigarcia.wdm.WebDriverManager
-import io.github.bonigarcia.wdm.config.DriverManagerType
-import org.openqa.selenium.chrome.ChromeDriver
+import org.springframework.samples.petclinic.geb.CreateOwnerTest
 
 cacheDriver = true
-baseUrl = 'http://localhost:8080'
-
+//baseUrl = 'http://localhost:8080'
+baseUrl = "http://host.testcontainers.internal:8080"
 waiting {
    timeout = 5
 }
 
 driver = {
-   WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
-   new ChromeDriver()
+   CreateOwnerTest.webDriverContainer.getWebDriver()
 }

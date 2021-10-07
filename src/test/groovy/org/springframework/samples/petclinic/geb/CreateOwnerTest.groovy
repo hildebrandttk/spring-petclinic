@@ -9,13 +9,50 @@ import org.springframework.samples.petclinic.geb.pages.HomePage
 import org.springframework.samples.petclinic.geb.pages.OwnerDetailPage
 import org.springframework.samples.petclinic.geb.pages.OwnerSearchPage
 import org.testcontainers.containers.BrowserWebDriverContainer
+import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.MySQLContainer
+import org.testcontainers.containers.Network
 import org.testcontainers.containers.VncRecordingContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
+import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
+import org.testcontainers.containers.wait.strategy.WaitStrategy
+import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 class CreateOwnerTest extends GebTest {
+
+   private static final Network NETWORK = Network.newNetwork();
+
+   @Container
+   static MySQLContainer mySQLContainer = (MySQLContainer) new MySQLContainer("mysql:8")
+      .withInitScript("mysql-db-init-file.sql")
+      .withNetwork(NETWORK)
+      .withNetworkAliases("mysql")
+      .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Mysql-Container")))
+
+   @Container
+   static GenericContainer petClinicContainer = (GenericContainer) new GenericContainer(
+      new ImageFromDockerfile()
+         .withFileFromPath(".", new File("target").toPath())
+         .withDockerfileFromBuilder(
+            builder -> builder
+               .from("adoptopenjdk/openjdk11")
+               .copy("spring-petclinic-2.5.0-SNAPSHOT.jar", "/app.jar")
+               .expose(8080)
+               .cmd("java", "-jar", "/app.jar")
+         )
+   )
+      .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("PetClinic-Container")))
+      .withEnv("spring_profiles_active", "mysql")
+      .withEnv("MYSQL_URL", "jdbc:mysql://mysql/${mySQLContainer.getDatabaseName()}")
+      .withEnv("MYSQL_USER", mySQLContainer.getUsername())
+      .withEnv("MYSQL_PASS", mySQLContainer.getPassword())
+      .withExposedPorts(8080)
+      .withNetwork(NETWORK)
+      .withNetworkAliases("petclinic")
+      .dependsOn(mySQLContainer)
 
    @Container
    static BrowserWebDriverContainer webDriverContainer = (BrowserWebDriverContainer) new BrowserWebDriverContainer()
@@ -25,9 +62,11 @@ class CreateOwnerTest extends GebTest {
          new File("target"),
          VncRecordingContainer.VncRecordingFormat.MP4)
       .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Selenium-Container")))
+      .withNetwork(NETWORK)
+      .dependsOn(petClinicContainer)
 
    @Test
-   void testCreateOwner(){
+   void testCreateOwner() {
       HomePage homePage = browser.to(HomePage)
       OwnerSearchPage ownerSearch = homePage.toOwnerSearch()
       CreateOwnerPage createOwner = ownerSearch.toCreateOwner()

@@ -22,9 +22,11 @@ class CreateOwnerTest extends GebTest {
       org.testcontainers.Testcontainers.exposeHostPorts(8080);
    }
 
+
    @Container
    static BrowserWebDriverContainer webDriverContainer = (BrowserWebDriverContainer) new BrowserWebDriverContainer()
-      .withCapabilities(new ChromeOptions())
+      // https://github.com/testcontainers/testcontainers-java/issues/2552
+      .withCapabilities(new ChromeOptions().addArguments("--disable-dev-shm-usage"))
       .withRecordingMode(
          BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL,
          new File("target"),

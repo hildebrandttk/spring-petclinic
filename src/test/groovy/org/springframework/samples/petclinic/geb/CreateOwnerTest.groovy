@@ -25,6 +25,7 @@ class CreateOwnerTest extends GebTest {
          BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL,
          new File("target"),
          VncRecordingContainer.VncRecordingFormat.MP4)
+      .withSharedMemorySize(2147483648L)
       .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Selenium-Container")))
 
    @Test

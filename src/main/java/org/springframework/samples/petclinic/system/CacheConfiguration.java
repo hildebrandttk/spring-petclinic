@@ -17,7 +17,6 @@
 package org.springframework.samples.petclinic.system;
 
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,7 +28,7 @@ import javax.cache.configuration.MutableConfiguration;
  * accessible via JMX.
  */
 @Configuration(proxyBeanMethods = false)
-@EnableCaching
+//@EnableCaching
 class CacheConfiguration {
 
 	@Bean

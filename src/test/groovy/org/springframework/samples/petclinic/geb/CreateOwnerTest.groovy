@@ -17,6 +17,11 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @Testcontainers
 class CreateOwnerTest extends GebTest {
 
+   static {
+       //Mapping of localhost port on host computer to all containers
+       org.testcontainers.Testcontainers.exposeHostPorts(8080);
+   }
+
    @Container
    static BrowserWebDriverContainer webDriverContainer = (BrowserWebDriverContainer) new BrowserWebDriverContainer()
       // https://github.com/testcontainers/testcontainers-java/issues/2552

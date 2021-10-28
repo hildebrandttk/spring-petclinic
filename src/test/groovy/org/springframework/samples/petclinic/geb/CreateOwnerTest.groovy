@@ -57,7 +57,9 @@ class CreateOwnerTest extends GebTest {
    @Container
    static BrowserWebDriverContainer webDriverContainer = (BrowserWebDriverContainer) new BrowserWebDriverContainer()
       // https://github.com/testcontainers/testcontainers-java/issues/2552
-      .withCapabilities(new ChromeOptions().addArguments("--disable-dev-shm-usage"))
+      .withCapabilities(new ChromeOptions()
+              .addArguments("--disable-dev-shm-usage") // For wsl2 only
+      )
       .withRecordingMode(
          BrowserWebDriverContainer.VncRecordingMode.RECORD_ALL,
          new File("target"),
@@ -65,8 +67,9 @@ class CreateOwnerTest extends GebTest {
       .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger("Selenium-Container")))
       .withNetwork(NETWORK)
       .dependsOn(petClinicContainer)
+      .withSharedMemorySize(2147483648L) // For wsl2 only
 
-   @Test
+    @Test
    void testCreateOwner() {
       HomePage homePage = browser.to(HomePage)
       OwnerSearchPage ownerSearch = homePage.toOwnerSearch()

@@ -4,7 +4,7 @@ import geb.Page
 
 class HomePage extends Page {
 
-   static url = 'http://localhost:8080/'
+   static url = '/'
 
    static at = { wellcomePetsImage.displayed }
 

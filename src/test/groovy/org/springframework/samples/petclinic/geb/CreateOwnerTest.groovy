@@ -8,14 +8,8 @@ import org.springframework.samples.petclinic.geb.pages.CreateOwnerPage
 import org.springframework.samples.petclinic.geb.pages.HomePage
 import org.springframework.samples.petclinic.geb.pages.OwnerDetailPage
 import org.springframework.samples.petclinic.geb.pages.OwnerSearchPage
-import org.testcontainers.containers.BrowserWebDriverContainer
-import org.testcontainers.containers.GenericContainer
-import org.testcontainers.containers.MySQLContainer
-import org.testcontainers.containers.Network
-import org.testcontainers.containers.VncRecordingContainer
+import org.testcontainers.containers.*
 import org.testcontainers.containers.output.Slf4jLogConsumer
-import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
-import org.testcontainers.containers.wait.strategy.WaitStrategy
 import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers

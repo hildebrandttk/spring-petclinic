@@ -11,8 +11,7 @@ class CreateOwnerPage extends Page {
    static at = { navElementSearchActive.displayed && createOwnerButton.displayed && firstNameInput.displayed }
 
    static content = {
-      navElementHome { $('li span.glyphicon-home') }
-      navElementSearchActive { $('li.active span.glyphicon-search') }
+      navElementSearchActive(wait: true) { $('li.nav-item a.active[href="/owners/find"]') }
       firstNameInput { $(By.name('firstName')).module(TextInput) }
       lastNameInput { $(By.name('lastName')).module(TextInput) }
       addressInput { $(By.name('address')).module(TextInput) }

@@ -33,7 +33,7 @@ class CreateOwnerTest extends GebTest {
          .withDockerfileFromBuilder(
             builder -> builder
                .from("adoptopenjdk/openjdk11")
-               .copy("spring-petclinic-2.5.0-SNAPSHOT.jar", "/app.jar")
+               .copy("spring-petclinic-2.6.0-SNAPSHOT.jar", "/app.jar")
                .expose(8080)
                .cmd("java", "-jar", "/app.jar")
          )

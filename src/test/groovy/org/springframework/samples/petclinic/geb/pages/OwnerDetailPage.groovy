@@ -10,8 +10,7 @@ class OwnerDetailPage extends Page {
    static at = { navElementSearchActive.displayed && toAddPetButton.displayed }
 
    static content = {
-      navElementHome { $('li span.glyphicon-home') }
-      navElementSearchActive { $('li.active span.glyphicon-search') }
+      navElementSearchActive(wait: true) { $('li.nav-item a.active[href="/owners/find"]') }
       toEditOwnerButton { $('a', href: endsWith('/edit')) }
       toAddPetButton { $('a', href: endsWith('/pets/new')) }
       resultTable { $('table.table') }

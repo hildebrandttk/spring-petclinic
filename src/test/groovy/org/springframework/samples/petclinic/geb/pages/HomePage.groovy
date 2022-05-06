@@ -6,11 +6,12 @@ class HomePage extends Page {
 
    static url = '/'
 
-   static at = { navElementHomeActive.displayed }
+   static at = { wellcomePetsImage.displayed }
 
    static content = {
       navElementHomeActive(wait: true) { $('li.active span.glyphicon-home') }
-      navElementSearch { $('li span.glyphicon-search') }
+      wellcomePetsImage(wait: true) { $('img', src: '/resources/images/pets.png') }
+      navElementSearch(wait: true) { $('li.nav-item a[href="/owners/find"]') }
    }
 
    OwnerSearchPage toOwnerSearch(){

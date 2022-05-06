@@ -9,7 +9,7 @@ class HomePage extends Page {
    static at = { wellcomePetsImage.displayed }
 
    static content = {
-      navElementHomeActive(wait: true) { $('li.active span.glyphicon-home') }
+      navElementHomeActive(wait: true) { $('li.nav-item a.active[href="/"]') }
       wellcomePetsImage(wait: true) { $('img', src: '/resources/images/pets.png') }
       navElementSearch(wait: true) { $('li.nav-item a[href="/owners/find"]') }
    }
